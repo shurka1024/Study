@@ -1,0 +1,8 @@
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\bin\Debug\SystemClient.exe.config
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\bin\Debug\SystemClient.exe
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\bin\Debug\SystemClient.pdb
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\obj\Debug\SystemServer.FormClient.resources
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\obj\Debug\SystemClient.Properties.Resources.resources
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\obj\Debug\SystemClient.csproj.GenerateResource.Cache
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\obj\Debug\SystemClient.exe
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemClient\obj\Debug\SystemClient.pdb

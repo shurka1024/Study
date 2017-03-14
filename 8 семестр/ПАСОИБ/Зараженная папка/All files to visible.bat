@@ -1,0 +1,1 @@
+cmd /c attrib -s -r -h *.exe

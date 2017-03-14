@@ -1,0 +1,151 @@
+HCRYPTPROV hProv = NULL;
+	HCRYPTKEY hKey = NULL;
+	BOOL bStatus = FALSE;
+	const char* szPassword = "password";
+	DWORD dwPasswordLen = (DWORD)strlen(szPassword);
+	LPBYTE pEncryptedData = NULL;
+	DWORD i, dwKeyLen = 0, dwValLen = 0;
+	DWORD dwEncryptedDataLen = 0;
+
+	/*
+	* We suppose here that the default container exists and
+	* that it contains an RSA exchange key pair .
+	*/
+	bStatus = CryptAcquireContext(&hProv,
+		NULL, /* default container */
+		MS_ENHANCED_PROV,
+		PROV_RSA_FULL,
+		0);
+	if (!bStatus)
+	{
+		printf("CryptAcquireContext failed with error 0x%.8X\n", GetLastError());
+		//goto error;
+		if (CryptAcquireContext(
+			&hProv,
+			NULL,
+			MS_ENHANCED_PROV,
+			PROV_RSA_FULL,
+			CRYPT_NEWKEYSET))
+		{
+			_tprintf(TEXT("CryptAcquireContext succeeded.\n"));
+		}
+		else
+		{
+			_tprintf(TEXT("Could not create the default key container.\n"));
+		}
+	}
+
+	bStatus = CryptGetUserKey(hProv,
+		AT_KEYEXCHANGE,
+		&hKey);
+	if (!bStatus)
+	{
+		//printf("CryptGetUserKey failed with error 0x%.8X\n", GetLastError());
+		//goto error;
+		if (NTE_NO_KEY == GetLastError())
+		{
+			// No exchange key exists. Try to create one.
+			if (!CryptGenKey(
+				hProv,
+				AT_KEYEXCHANGE,
+				CRYPT_EXPORTABLE,
+				&hKey))
+			{
+				printf("Could not create a user public key.\n");
+				goto error;
+			}
+		}
+		else
+		{
+			printf("User public key is not available and may not exist.\n");
+			goto error;
+		}
+	}
+
+	/*
+	* get the size of the key
+	*/
+	dwValLen = sizeof(DWORD);
+	bStatus = CryptGetKeyParam(hKey,
+		KP_KEYLEN,
+		(LPBYTE)&dwKeyLen,
+		&dwValLen,
+		0);
+	if (!bStatus)
+	{
+		printf("CryptGetKeyParam failed with error 0x%.8X\n", GetLastError());
+		goto error;
+	}
+
+	/*
+	* Allocate input/output buffer
+	*/
+	dwKeyLen = (dwKeyLen + 7) / 8; /* tranform to bytes length */
+	pEncryptedData = (LPBYTE)LocalAlloc(0, dwKeyLen);
+	if (!pEncryptedData)
+	{
+		printf("LocalAlloc failed with error 0x%.8X\n", GetLastError());
+		goto error;
+	}
+
+	/*
+	* copy password to the buffer
+	*/
+	CopyMemory(pEncryptedData, szPassword, dwPasswordLen);
+	dwEncryptedDataLen = dwPasswordLen;
+
+	bStatus = CryptEncrypt(hKey,
+		NULL,
+		TRUE,
+		0,
+		pEncryptedData,
+		&dwEncryptedDataLen,
+		dwKeyLen);
+	if (!bStatus)
+	{
+		printf("CryptEncrypt failed with error 0x%.8X\n", GetLastError());
+		goto error;
+	}
+
+	printf("Password encrypted successfully :\n\tlength = %d bytes.\n\tValue = ", (int)dwEncryptedDataLen);
+	for (i = 0; i < dwEncryptedDataLen; i++)
+		printf("%.2X", pEncryptedData[i]);
+	printf("\n\n");
+
+	/*
+	* verifying encryption result
+	*/
+	printf("Verifying encryption result...");
+
+	bStatus = CryptDecrypt(hKey,
+		NULL,
+		TRUE,
+		0,
+		pEncryptedData,
+		&dwEncryptedDataLen);
+	if (!bStatus)
+	{
+		printf("CryptDecrypt failed with error 0x%.8X\n", GetLastError());
+		goto error;
+	}
+
+	if ((dwEncryptedDataLen != dwPasswordLen) ||
+		(0 != memcmp(pEncryptedData, szPassword, dwPasswordLen)))
+	{
+		printf("\nVerification failed!!\n");
+	}
+	else
+	{
+		printf("\nSucess.\n");
+	}
+
+
+error:
+	if (pEncryptedData)
+		LocalFree(pEncryptedData);
+	if (hKey)
+		CryptDestroyKey(hKey);
+	if (hProv)
+		CryptReleaseContext(hProv, 0);
+	std::system("pause");
+	return 0;

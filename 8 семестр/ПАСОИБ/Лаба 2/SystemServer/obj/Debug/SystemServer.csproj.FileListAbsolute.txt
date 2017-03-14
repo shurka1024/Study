@@ -1,0 +1,7 @@
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\bin\Debug\SystemServer.exe.config
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\bin\Debug\SystemServer.exe
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\bin\Debug\SystemServer.pdb
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\obj\Debug\SystemServer.Properties.Resources.resources
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\obj\Debug\SystemServer.csproj.GenerateResource.Cache
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\obj\Debug\SystemServer.exe
+D:\8 семестр\ПАСОИБ\Лаба 2\SystemServer\obj\Debug\SystemServer.pdb
