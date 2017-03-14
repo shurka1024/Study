@@ -1,7 +1,9 @@
+#define _CRT_SECURE_NO_WARNINGS
 #ifndef _WIN32_WINNT		// Allow use of features specific to Windows 2000 or later.                   
 #define _WIN32_WINNT 0x0500	// Change this to the appropriate value to target other versions of Windows.
 #endif
 
+#include <fstream>
 #include "CCrypto.h"
 
 #pragma comment(lib, "Crypt32")
@@ -16,11 +18,6 @@ bool CCrypto::CryptoEncryptFile()
 {
 	bool result = false;
 	BOOL bStatus = FALSE;
-	const char* szPassword = "password";
-	DWORD dwPasswordLen = (DWORD)strlen(szPassword);
-	LPBYTE pEncryptedData = NULL;
-	DWORD i, dwKeyLen = 0, dwValLen = 0;
-	DWORD dwEncryptedDataLen = 0;
 
 	/*
 	* We suppose here that the default container exists and
@@ -33,7 +30,7 @@ bool CCrypto::CryptoEncryptFile()
 		0);
 	if (!bStatus)
 	{
-		printf("CryptAcquireContext failed with error 0x%.8X\n", GetLastError());
+		//printf("CryptAcquireContext failed with error 0x%.8X\n", GetLastError());
 		//goto error;
 		if (CryptAcquireContext(
 			&hProv,
@@ -107,16 +104,23 @@ bool CCrypto::CryptoEncryptFile()
 	* copy password to the buffer
 	*/
 
-	FILE *file = fopen(inputFile, "rb");
-	fseek(file, 0, SEEK_END);
-	dwPasswordLen = ftell(file);
+	//FILE *file = fopen(inputFile, "rb");
+	//fseek(file, 0, SEEK_END);
+	//dwPasswordLen = ftell(file);
 
-	fseek(file, 0, SEEK_SET);
-	while (!feof(file))
-	{
-		getc(file);
-	}
+	//fseek(file, 0, SEEK_SET);
+	//while (!feof(file))
+	//{
+	//	getc(file);
+	//}
 
+	char buffer[10];
+
+	std::ifstream file1(inputFile);
+	file1.read(buffer, 10);
+	file1.close();
+	szPassword = &buffer[0];
+	dwPasswordLen = (DWORD)strlen(szPassword);
 	CopyMemory(pEncryptedData, szPassword, dwPasswordLen);
 	dwEncryptedDataLen = dwPasswordLen;
 
@@ -134,7 +138,7 @@ bool CCrypto::CryptoEncryptFile()
 	}
 
 	printf("Password encrypted successfully :\n\tlength = %d bytes.\n\tValue = ", (int)dwEncryptedDataLen);
-	for (i = 0; i < dwEncryptedDataLen; i++)
+	for (DWORD i = 0; i < dwEncryptedDataLen; i++)
 		printf("%.2X", pEncryptedData[i]);
 	printf("\n\n");
 
@@ -149,9 +153,32 @@ bool CCrypto::CryptoEncryptFile()
 
 bool CCrypto::CryptoDecryptFile()
 {
+	BOOL bStatus = FALSE;
 	bool result = false;
+	bStatus = CryptDecrypt(hKey,
+		NULL,
+		TRUE,
+		0,
+		pEncryptedData,
+		&dwEncryptedDataLen);
+	if (!bStatus)
+	{
+		printf("CryptDecrypt failed with error 0x%.8X\n", GetLastError());
+		//goto error;
+	}
 
+	if ((dwEncryptedDataLen != dwPasswordLen) ||
+		(0 != memcmp(pEncryptedData, szPassword, dwPasswordLen)))
+	{
+		printf("\nVerification failed!!\n\n");
+	}
+	else
+	{
+		printf("\nSucess.\n\n");
+	}
 
+	for (DWORD i = 0; i < dwPasswordLen; i++)
+		printf("%c", pEncryptedData[i]);
 
 	return result;
 }

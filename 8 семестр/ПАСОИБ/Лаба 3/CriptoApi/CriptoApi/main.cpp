@@ -7,6 +7,7 @@
 #include <tchar.h>
 #include <windows.h>
 #include <iostream>
+#include "CCrypto.h"
 
 #pragma comment(lib, "Crypt32")
 
@@ -37,10 +38,13 @@ BYTE* Encrypt(char *str, char *password)
 
 int main()
 {
-	char* in = "hello";
-	//scanf("%s", in);
-	BYTE* out = Encrypt(in, "1");
-	cout << out << endl;
+	//char* in = "hello";
+	////scanf("%s", in);
+	//BYTE* out = Encrypt(in, "1");
+	//cout << out << endl;
 
-	
+	CCrypto crypto;
+	crypto.CryptoEncryptFile();
+	crypto.CryptoDecryptFile();
+	system("pause");
 }
