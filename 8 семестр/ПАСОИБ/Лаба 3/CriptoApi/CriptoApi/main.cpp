@@ -38,13 +38,9 @@ BYTE* Encrypt(char *str, char *password)
 
 int main()
 {
-	//char* in = "hello";
-	////scanf("%s", in);
-	//BYTE* out = Encrypt(in, "1");
-	//cout << out << endl;
-
-	CCrypto crypto;
-	crypto.CryptoEncryptFile();
-	crypto.CryptoDecryptFile();
-	system("pause");
+		CCrypto crypto;
+		crypto.CryptoEncryptFile();
+		crypto.CryptoDecryptFile();
+		std::cout << std::endl;
+		system("pause");
 }

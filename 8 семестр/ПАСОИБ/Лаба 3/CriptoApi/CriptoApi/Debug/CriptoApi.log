@@ -1,6 +1,4 @@
 ﻿C:\Program Files\MSBuild\Microsoft.Cpp\v4.0\V140\Microsoft.CppBuild.targets(392,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (CriptoApi.vcxproj).  This can lead to incorrect clean and rebuild behavior.
   main.cpp
-  CCrypto.cpp
-  Создание кода...
   CriptoApi.vcxproj -> D:\Study\8 семестр\ПАСОИБ\Лаба 3\CriptoApi\Debug\CryptoApi.exe
   CriptoApi.vcxproj -> D:\Study\8 семестр\ПАСОИБ\Лаба 3\CriptoApi\Debug\CryptoApi.pdb (Partial PDB)

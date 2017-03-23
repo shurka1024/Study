@@ -8,6 +8,9 @@
 
 #pragma comment(lib, "Crypt32")
 
+const int MAX_LEN = 10;
+const int len = 128;
+
 CCrypto::CCrypto()
 {
 	//inputFile = "1.txt";
@@ -19,19 +22,15 @@ bool CCrypto::CryptoEncryptFile()
 	bool result = false;
 	BOOL bStatus = FALSE;
 
-	/*
-	* We suppose here that the default container exists and
-	* that it contains an RSA exchange key pair .
-	*/
+#pragma region CryptAcquireContext
+
 	bStatus = CryptAcquireContext(&hProv,
-		NULL, /* default container */
+		NULL, // Контейнер по умолчанию
 		MS_ENHANCED_PROV,
 		PROV_RSA_FULL,
 		0);
 	if (!bStatus)
 	{
-		//printf("CryptAcquireContext failed with error 0x%.8X\n", GetLastError());
-		//goto error;
 		if (CryptAcquireContext(
 			&hProv,
 			NULL,
@@ -47,16 +46,18 @@ bool CCrypto::CryptoEncryptFile()
 		}
 	}
 
+#pragma endregion
+
+#pragma region CryptGetUserKey
+
 	bStatus = CryptGetUserKey(hProv,
 		AT_KEYEXCHANGE,
 		&hKey);
 	if (!bStatus)
 	{
-		//printf("CryptGetUserKey failed with error 0x%.8X\n", GetLastError());
-		//goto error;
 		if (NTE_NO_KEY == GetLastError())
 		{
-			// No exchange key exists. Try to create one.
+			// Нет ключа. Сгенерируем ключ
 			if (!CryptGenKey(
 				hProv,
 				AT_KEYEXCHANGE,
@@ -74,10 +75,11 @@ bool CCrypto::CryptoEncryptFile()
 		}
 	}
 
-	/*
-	* get the size of the key
-	*/
-	dwValLen = sizeof(DWORD);
+#pragma endregion
+
+#pragma region CryptGetKeyParam
+
+	dwValLen = sizeof(DWORD);			// Размер ключа
 	bStatus = CryptGetKeyParam(hKey,
 		KP_KEYLEN,
 		(LPBYTE)&dwKeyLen,
@@ -89,64 +91,80 @@ bool CCrypto::CryptoEncryptFile()
 		return false;
 	}
 
-	/*
-	* Allocate input/output buffer
-	*/
-	dwKeyLen = (dwKeyLen + 7) / 8; /* tranform to bytes length */
-	pEncryptedData = (LPBYTE)LocalAlloc(0, dwKeyLen);
-	if (!pEncryptedData)
-	{
-		printf("LocalAlloc failed with error 0x%.8X\n", GetLastError());
-		return false;
-	}
+#pragma endregion
 
-	/*
-	* copy password to the buffer
-	*/
+#pragma region CryptEncrypt
 
-	//FILE *file = fopen(inputFile, "rb");
-	//fseek(file, 0, SEEK_END);
-	//dwPasswordLen = ftell(file);
-
-	//fseek(file, 0, SEEK_SET);
-	//while (!feof(file))
+	//Выделим буффер
+	dwKeyLen = (dwKeyLen + 7) / 8;			// Преобразуем в байты
+	//pEncryptedData = (LPBYTE)LocalAlloc(0, dwKeyLen);
+	//if (!pEncryptedData)
 	//{
-	//	getc(file);
+	//	printf("LocalAlloc failed with error 0x%.8X\n", GetLastError());
+	//	return false;
 	//}
 
-	char buffer[10];
+	char buffer[MAX_LEN];
+	
 
-	std::ifstream file1(inputFile);
-	file1.read(buffer, 10);
-	file1.close();
-	szPassword = &buffer[0];
-	dwPasswordLen = (DWORD)strlen(szPassword);
-	CopyMemory(pEncryptedData, szPassword, dwPasswordLen);
-	dwEncryptedDataLen = dwPasswordLen;
+	FILE *f1, *f2;
+	f1 = fopen(inputFile, "rb+");
+	f2 = fopen(outputFile, "wb+");
+	char buf;
 
-	bStatus = CryptEncrypt(hKey,
-		NULL,
-		TRUE,
-		0,
-		pEncryptedData,
-		&dwEncryptedDataLen,
-		dwKeyLen);
-	if (!bStatus)
+	while (!feof(f1))
 	{
-		printf("CryptEncrypt failed with error 0x%.8X\n", GetLastError());
-		return false;
+		pEncryptedData = (LPBYTE)LocalAlloc(0, dwKeyLen);
+		for (int i = 0; i < MAX_LEN; ++i)
+			buffer[i] = '\0';
+		fread(&buffer, MAX_LEN, 1, f1);
+		//for (int i = 0; i < MAX_LEN; ++i)
+		//{
+		//	fread(&buf, sizeof(char), 1, f1);
+		//	buffer[i] = buf;
+		//}
+
+		//std::ifstream file1(inputFile);
+		//file1.read(buffer, MAX_LEN);
+		//file1.close();
+		szPassword = &buffer[0];
+		dwPasswordLen = MAX_LEN;
+		CopyMemory(pEncryptedData, szPassword, dwPasswordLen);
+		dwEncryptedDataLen = dwPasswordLen;
+
+		bStatus = CryptEncrypt(hKey,
+			NULL,
+			TRUE,
+			0,
+			pEncryptedData,
+			&dwEncryptedDataLen,
+			dwKeyLen);
+		if (!bStatus)
+		{
+			printf("CryptEncrypt failed with error 0x%.8X\n", GetLastError());
+			return false;
+		}
+
+		for (int i = 0; i < len; ++i)
+		{
+			buf = pEncryptedData[i];
+			fwrite(&buf, sizeof(char), 1, f2);
+		}
+
+		//printf("Password encrypted successfully :\n\tlength = %d bytes.\n\tValue = ", (int)dwEncryptedDataLen);
+		//for (DWORD i = 0; i < dwEncryptedDataLen; i++)
+		//	printf("%.2X", pEncryptedData[i]);
+		//printf("\n\n");
+
+		/*
+		* verifying encryption result
+		*/
+		//printf("Verifying encryption result...");
 	}
+	fclose(f2);
+	fclose(f1);
 
-	printf("Password encrypted successfully :\n\tlength = %d bytes.\n\tValue = ", (int)dwEncryptedDataLen);
-	for (DWORD i = 0; i < dwEncryptedDataLen; i++)
-		printf("%.2X", pEncryptedData[i]);
-	printf("\n\n");
-
-	/*
-	* verifying encryption result
-	*/
-	printf("Verifying encryption result...");
-
+#pragma endregion
 
 	return result;
 }
@@ -155,30 +173,39 @@ bool CCrypto::CryptoDecryptFile()
 {
 	BOOL bStatus = FALSE;
 	bool result = false;
-	bStatus = CryptDecrypt(hKey,
-		NULL,
-		TRUE,
-		0,
-		pEncryptedData,
-		&dwEncryptedDataLen);
-	if (!bStatus)
-	{
-		printf("CryptDecrypt failed with error 0x%.8X\n", GetLastError());
-		//goto error;
-	}
+	char buffer[len];
 
-	if ((dwEncryptedDataLen != dwPasswordLen) ||
-		(0 != memcmp(pEncryptedData, szPassword, dwPasswordLen)))
+	FILE *f;
+	char buf;
+	f = fopen(outputFile, "rb+");
+	while (!feof(f))
 	{
-		printf("\nVerification failed!!\n\n");
-	}
-	else
-	{
-		printf("\nSucess.\n\n");
-	}
+		fread(&buffer, len, 1, f);
 
-	for (DWORD i = 0; i < dwPasswordLen; i++)
-		printf("%c", pEncryptedData[i]);
+		szPassword = &buffer[0];
+		dwPasswordLen = len;
+		dwEncryptedDataLen = len;
+		pEncryptedData = NULL;
+		//dwKeyLen = (dwKeyLen + 7) / 8; /* tranform to bytes length */
+		pEncryptedData = (LPBYTE)LocalAlloc(0, dwKeyLen);
+
+		CopyMemory(pEncryptedData, szPassword, dwPasswordLen);
+		bStatus = CryptDecrypt(hKey,
+			NULL,
+			TRUE,
+			0,
+			pEncryptedData,
+			&dwEncryptedDataLen);
+		//if (!bStatus)
+		//{
+		//	printf("CryptDecrypt failed with error 0x%.8X\n", GetLastError());
+		//	//goto error;
+		//}
+
+		for (DWORD i = 0; i < MAX_LEN; i++)
+			printf("%c", pEncryptedData[i]);
+	}
+	fclose(f);
 
 	return result;
 }

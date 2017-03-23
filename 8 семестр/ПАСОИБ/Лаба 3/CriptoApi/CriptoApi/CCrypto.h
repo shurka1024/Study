@@ -10,7 +10,7 @@ public:
 
 public:
 	char inputFile[255] = "D:\\Study\\8 семестр\\ПАСОИБ\\Лаба 3\\CriptoApi\\Debug\\1.txt";														// Исходный файл
-	char outputFile[255] = "2.txt";														// Выходной файл
+	char outputFile[255] = "D:\\Study\\8 семестр\\ПАСОИБ\\Лаба 3\\CriptoApi\\Debug\\2.txt";														// Выходной файл
 	
 private:
 	HCRYPTPROV hProv = NULL;															// Криптопровайдер
@@ -22,4 +22,6 @@ private:
 	LPBYTE pEncryptedData = NULL;
 	DWORD dwKeyLen = 0, dwValLen = 0;
 	DWORD dwEncryptedDataLen = 0;
+
+
 };
