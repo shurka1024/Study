@@ -1,0 +1,13 @@
+﻿<album>
+	<cd number="432">
+		<title>The World Of Trance</title>
+		<artist>Van Helden</artist>
+		<tracks total="20"/>
+	</cd>
+	<cd number="87">
+		<title>Heart Breaker</title>
+		<subtitle>Sixteen Classic Perfomance</subtitle>
+		<artist>Part Benatar</artist>
+		<tracks total="16"/>
+	</cd>	
+</album>
