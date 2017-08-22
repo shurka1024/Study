@@ -1,5 +1,0 @@
-E:\8 семестр\ПАСОИБ\Лаба 1\SystemClient\bin\Debug\SystemClient.exe.config
-E:\8 семестр\ПАСОИБ\Лаба 1\SystemClient\bin\Debug\SystemClient.exe
-E:\8 семестр\ПАСОИБ\Лаба 1\SystemClient\bin\Debug\SystemClient.pdb
-E:\8 семестр\ПАСОИБ\Лаба 1\SystemClient\obj\Debug\SystemClient.exe
-E:\8 семестр\ПАСОИБ\Лаба 1\SystemClient\obj\Debug\SystemClient.pdb

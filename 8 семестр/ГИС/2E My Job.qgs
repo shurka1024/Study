@@ -4,10 +4,10 @@
     <mapcanvas>
         <units>meters</units>
         <extent>
-            <xmin>-108.966892</xmin>
-            <ymin>-737.293027</ymin>
-            <xmax>546.499877</xmax>
-            <ymax>-442.243026</ymax>
+            <xmin>172.852335</xmin>
+            <ymin>-115.858956</ymin>
+            <xmax>500.585719</xmax>
+            <ymax>31.965892</ymax>
         </extent>
         <projections>1</projections>
         <destinationsrs>
@@ -24,24 +24,29 @@
         </destinationsrs>
     </mapcanvas>
     <legend>
-        <legendlayer open="true" checked="Qt::Checked" name="Relyef2" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Checked" name="Prospekt" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Relyef220170213131430315" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Prospekt20170317143552654" visible="1"/>
             </filegroup>
         </legendlayer>
-        <legendlayer open="true" checked="Qt::Checked" name="Doroga2" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Unchecked" name="Relyef2" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Doroga220170213001310707" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Relyef220170213131430315" visible="0"/>
             </filegroup>
         </legendlayer>
-        <legendlayer open="true" checked="Qt::Checked" name="Relyef" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Unchecked" name="Doroga2" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Relyef20170212235825984" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Doroga220170213001310707" visible="0"/>
             </filegroup>
         </legendlayer>
-        <legendlayer open="true" checked="Qt::Checked" name="Doroga" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Unchecked" name="Relyef" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Doroga20170212235317114" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Relyef20170212235825984" visible="0"/>
+            </filegroup>
+        </legendlayer>
+        <legendlayer open="true" checked="Qt::Unchecked" name="Doroga" showFeatureCount="0">
+            <filegroup open="true" hidden="false">
+                <legendlayerfile isInOverview="0" layerid="Doroga20170212235317114" visible="0"/>
             </filegroup>
         </legendlayer>
         <legendlayer open="true" checked="Qt::Checked" name="Vodnie ob" showFeatureCount="0">
@@ -59,14 +64,14 @@
                 <legendlayerfile isInOverview="0" layerid="Kladbische20170212231113131" visible="0"/>
             </filegroup>
         </legendlayer>
-        <legendlayer open="true" checked="Qt::Checked" name="Prom. kvartal" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Unchecked" name="Prom. kvartal" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Prom__kvartal20170212230808800" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Prom__kvartal20170212230808800" visible="0"/>
             </filegroup>
         </legendlayer>
-        <legendlayer open="true" checked="Qt::Checked" name="Kvartal" showFeatureCount="0">
+        <legendlayer open="true" checked="Qt::Unchecked" name="Kvartal" showFeatureCount="0">
             <filegroup open="true" hidden="false">
-                <legendlayerfile isInOverview="0" layerid="Kvartal20170212225226395" visible="1"/>
+                <legendlayerfile isInOverview="0" layerid="Kvartal20170212225226395" visible="0"/>
             </filegroup>
         </legendlayer>
         <legendlayer open="true" checked="Qt::Checked" name="Ижевск2Е" showFeatureCount="0">
@@ -75,7 +80,7 @@
             </filegroup>
         </legendlayer>
     </legend>
-    <projectlayers layercount="10">
+    <projectlayers layercount="11">
         <maplayer minimumScale="0" maximumScale="1e+08" geometry="Line" type="vector" hasScaleBasedVisibilityFlag="0">
             <id>Doroga20170212235317114</id>
             <datasource>./Слои/Doroga.shp</datasource>
@@ -538,6 +543,84 @@
                 <scalingAttribute>0</scalingAttribute>
             </overlay>
         </maplayer>
+        <maplayer minimumScale="0" maximumScale="1e+08" geometry="Polygon" type="vector" hasScaleBasedVisibilityFlag="0">
+            <id>Prospekt20170317143552654</id>
+            <datasource>./Слои/Prospekt.shp</datasource>
+            <layername>Prospekt</layername>
+            <srs>
+                <spatialrefsys>
+                    <proj4>+proj=utm +zone=38 +datum=WGS84 +units=m +no_defs</proj4>
+                    <srsid>3122</srsid>
+                    <srid>32638</srid>
+                    <authid>EPSG:32638</authid>
+                    <description>WGS 84 / UTM zone 38N</description>
+                    <projectionacronym>utm</projectionacronym>
+                    <ellipsoidacronym>WGS84</ellipsoidacronym>
+                    <geographicflag>false</geographicflag>
+                </spatialrefsys>
+            </srs>
+            <transparencyLevelInt>255</transparencyLevelInt>
+            <provider encoding="System">ogr</provider>
+            <vectorjoins/>
+            <renderer-v2 symbollevels="0" type="singleSymbol">
+                <symbols>
+                    <symbol outputUnit="MM" alpha="1" type="fill" name="0">
+                        <layer pass="0" class="SimpleFill" locked="0">
+                            <prop k="color" v="255,170,0,255"/>
+                            <prop k="color_border" v="0,0,0,255"/>
+                            <prop k="offset" v="0,0"/>
+                            <prop k="style" v="solid"/>
+                            <prop k="style_border" v="solid"/>
+                            <prop k="width_border" v="0.26"/>
+                        </layer>
+                    </symbol>
+                </symbols>
+                <rotation field=""/>
+                <sizescale field=""/>
+            </renderer-v2>
+            <customproperties/>
+            <displayfield>id</displayfield>
+            <label>0</label>
+            <labelattributes>
+                <label fieldname="" text="Подпись"/>
+                <family fieldname="" name="MS Shell Dlg 2"/>
+                <size fieldname="" units="pt" value="12"/>
+                <bold fieldname="" on="0"/>
+                <italic fieldname="" on="0"/>
+                <underline fieldname="" on="0"/>
+                <strikeout fieldname="" on="0"/>
+                <color fieldname="" red="0" blue="0" green="0"/>
+                <x fieldname=""/>
+                <y fieldname=""/>
+                <offset x="0" y="0" units="pt" yfieldname="" xfieldname=""/>
+                <angle fieldname="" value="0" auto="0"/>
+                <alignment fieldname="" value="center"/>
+                <buffercolor fieldname="" red="255" blue="255" green="255"/>
+                <buffersize fieldname="" units="pt" value="1"/>
+                <bufferenabled fieldname="" on=""/>
+                <multilineenabled fieldname="" on=""/>
+                <selectedonly on=""/>
+            </labelattributes>
+            <edittypes>
+                <edittype type="0" name="Name"/>
+                <edittype type="0" name="id"/>
+            </edittypes>
+            <editform></editform>
+            <editforminit></editforminit>
+            <annotationform></annotationform>
+            <attributeactions/>
+            <overlay display="false" type="diagram">
+                <renderer item_interpretation="linear">
+                    <diagramitem size="0" value="0"/>
+                    <diagramitem size="0" value="0"/>
+                </renderer>
+                <factory sizeUnits="MM" type="Pie">
+                    <wellknownname>Pie</wellknownname>
+                    <classificationfield>0</classificationfield>
+                </factory>
+                <scalingAttribute>0</scalingAttribute>
+            </overlay>
+        </maplayer>
         <maplayer minimumScale="0" maximumScale="1e+08" geometry="Line" type="vector" hasScaleBasedVisibilityFlag="0">
             <id>Relyef20170212235825984</id>
             <datasource>./Слои/Relyef.shp</datasource>
@@ -656,7 +739,7 @@
                 <sizescale field=""/>
             </renderer-v2>
             <customproperties/>
-            <displayfield></displayfield>
+            <displayfield>id</displayfield>
             <label>0</label>
             <labelattributes>
                 <label fieldname="" text="Подпись"/>
@@ -678,9 +761,9 @@
                 <multilineenabled fieldname="" on=""/>
                 <selectedonly on=""/>
             </labelattributes>
-            <editform></editform>
+            <editform>.</editform>
             <editforminit></editforminit>
-            <annotationform></annotationform>
+            <annotationform>.</annotationform>
             <attributeactions/>
         </maplayer>
         <maplayer minimumScale="0" maximumScale="1e+08" geometry="Polygon" type="vector" hasScaleBasedVisibilityFlag="0">

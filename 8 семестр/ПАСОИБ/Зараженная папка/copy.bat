@@ -1,1 +1,0 @@
-copy /b 1.bat + 1.exe 3.exe

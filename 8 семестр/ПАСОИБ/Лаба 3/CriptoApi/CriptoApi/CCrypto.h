@@ -5,6 +5,7 @@ class CCrypto
 {
 public:
 	CCrypto();
+	bool First();
 	bool CryptoEncryptFile();															// Шифрование файла
 	bool CryptoDecryptFile();															// Дешифрование файла
 
@@ -16,8 +17,7 @@ private:
 	HCRYPTPROV hProv = NULL;															// Криптопровайдер
 	HCRYPTKEY hKey = NULL;																// Криптоключ
 
-	char* szPassword = "password";
-	//char szPassword[512];
+	char* szPassword = "";
 	DWORD dwPasswordLen = 0;
 	LPBYTE pEncryptedData = NULL;
 	DWORD dwKeyLen = 0, dwValLen = 0;

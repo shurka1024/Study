@@ -3,3 +3,9 @@ D:\8 семестр\ПАСОИБ\Лаба\Self-reprodoction program\Self-reprodo
 D:\8 семестр\ПАСОИБ\Лаба\Self-reprodoction program\Self-reprodoction program\bin\Debug\Self-reprodoction program.pdb
 D:\8 семестр\ПАСОИБ\Лаба\Self-reprodoction program\Self-reprodoction program\obj\Debug\Self-reprodoction program.exe
 D:\8 семестр\ПАСОИБ\Лаба\Self-reprodoction program\Self-reprodoction program\obj\Debug\Self-reprodoction program.pdb
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\bin\Debug\Self-reprodoction program.exe.config
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\obj\Debug\Self-reprodoction program.exe
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\obj\Debug\Self-reprodoction program.pdb
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\bin\Debug\Self-reprodoction program.exe
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\bin\Debug\Self-reprodoction program.pdb
+D:\Study\8 семестр\ПАСОИБ\Лаба 1\Self-reprodoction program\Self-reprodoction program\obj\Debug\Self-reprodoction program.csprojResolveAssemblyReference.cache
